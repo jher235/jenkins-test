@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: testJenkins
+  profiles:
+    active: local
+    group:
+      local: local, common, secret
+      blue: blue, common, secret
+      green: green, common, secret
+
+server:
+  env: blue
+
+--- # 영역 나누기
+
+spring:
+  config:
+    activate:
+      on-profile: local
+    color: gray
+
+server:
+  port: 8080
+  serverAddress: localhost
+
+serverName: local_server
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: blue
+    color: blue
+
+server:
+  port: 8080
+  serverAddress: 172.31.129.114 # 탄력젹 IP로 해도 됨
+
+serverName: blue_server
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: green
+    color: green
+
+server:
+  port: 8081
+  serverAddress: 172.31.129.114
+
+serverName: green_server
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: common  # 공통적인 정보들에 대해서는 common 으로 관리
